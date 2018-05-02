@@ -1,0 +1,32 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="ud-pf-badge">
+  <script>
+    /**
+     * `ud-pf-badge`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfBadgeElement extends Polymer.Element {
+      static get is() { return 'ud-pf-badge'; }
+      static get properties() {
+        return {
+          count: {
+            type: String
+          },
+          iconClass: {
+            type: String
+          },
+          tooltip: {
+            type: String
+          }
+        };
+      }
+    }
+
+    window.customElements.define(UdPfBadgeElement.is, UdPfBadgeElement);
+  </script>
+</dom-module>

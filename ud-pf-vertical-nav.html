@@ -1,0 +1,446 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+
+<link rel="import" href="styles/ud-pf-base-styles.html">
+<link rel="import" href="styles/ud-pf-shared-styles.html">
+<link rel="import" href="styles/ud-pf-list-group-styles.html">
+<link rel="import" href="styles/ud-pf-vertical-nav-styles.html">
+
+<dom-module id="ud-pf-vertical-nav">
+  <template>
+    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-list-group-styles ud-pf-vertical-nav-styles">
+      .hidden {
+        display: none!important;
+      }
+    </style>
+    <iron-media-query query="(max-width: 768px)" query-matches="{{_smallScreen}}"></iron-media-query>
+    <div id="nav" class$="[[_navStyles]]">
+      <ul class="list-group">
+        <dom-repeat items="[[_model]]" as="primary">
+          <template>
+            <li class$="[[_getItemClasses(primary,1)]]" on-mouseenter="_showSecondary" on-mouseleave="_hideSecondary" on-click="_handleClick">
+              <a href="[[primary.href]]">
+                <iron-icon class="fa" icon="[[primary.icon]]"></iron-icon>
+                <span class="list-group-item-value">[[primary.title]]</span>
+                <dom-if if="[[_hasBadge(primary,false)]]">
+                  <template>
+                    <div class="badge-container-pf">
+                      <dom-repeat items="[[primary.badges]]" as="primaryBadge">
+                        <template>
+                          <div class="badge" title="[[primaryBadge.tooltip]]">
+                            <dom-if if="[[primaryBadge.iconClass]]">
+                              <template>
+                                <span class="[[primaryBadge.iconClass]]"></span>
+                              </template>
+                            </dom-if>
+                            <span>[[primaryBadge.count]]</span>
+                          </div>
+                        </template>
+                      </dom-repeat>
+                    </div>
+                  </template>
+                </dom-if>
+              </a>
+              <dom-if if="[[_hasChildren(primary)]]">
+                <!-- Secodary -->
+                <template>
+                  <div class="nav-pf-secondary-nav">
+                    <div class="nav-item-pf-header">
+                      <a class="secondary-collapse-toggle-pf" on-click="_handleCollapseToggle"></a>
+                      <span>[[primary.title]]</span>
+                    </div>
+                    <ul class="list-group">
+                      <dom-repeat items="[[primary.children]]" as="secondary">
+                        <template>
+                          <li class$="[[_getItemClasses(secondary,2)]]" on-mouseenter="_showTertiary" on-mouseleave="_hideTertiary" on-click="_handleClick">
+                            <a href="[[secondary.href]]">
+                              <span class="list-group-item-value">[[secondary.title]]</span>
+                              <dom-if if="[[_hasBadge(secondary,false)]]">
+                                <template>
+                                  <div class="badge-container-pf">
+                                    <dom-repeat items="[[secondary.badges]]" as="secondaryBadge">
+                                      <template>
+                                        <div class="badge" title="[[secondaryBadge.tooltip]]">
+                                          <dom-if if="[[secondaryBadge.iconClass]]">
+                                            <template>
+                                              <span class$="[[secondaryBadge.iconClass]]"></span>
+                                            </template>
+                                          </dom-if>
+                                          <span>[[secondaryBadge.count]]</span>
+                                        </div>
+                                      </template>
+                                    </dom-repeat>
+                                  </div>
+                                </template>
+                              </dom-if>
+                            </a>
+                            <dom-if if="[[_hasChildren(secondary)]]">
+                              <template>
+                                <div class="nav-pf-tertiary-nav">
+                                  <div class="nav-item-pf-header">
+                                    <a class="tertiary-collapse-toggle-pf" on-click="_handleCollapseToggle"></a>
+                                    <span>[[secondary.title]]</span>
+                                  </div>
+                                  <ul class="list-group">
+                                    <dom-repeat items="[[secondary.children]]" as="tertiary">
+                                      <template>
+                                        <li class="list-group-item" on-click="_handleClick">
+                                          <a href="[[tertiary.href]]">
+                                            <div class="list-group-item-value">[[tertiary.title]]</div>
+                                            <dom-if if="[[_hasBadge(tertiary,false)]]">
+                                              <template>
+                                                <div class="badge-container-pf">
+                                                  <dom-repeat items="[[tertiary.badges]]" as="tertiaryBadge">
+                                                    <template>
+                                                      <div class="badge" title="[[tertiaryBadge.tooltip]]">
+                                                        <dom-if if="[[tertiaryBadge.iconClass]]">
+                                                          <template>
+                                                            <span class$="[[tertiaryBadge.iconClass]]"></span>
+                                                          </template>
+                                                        </dom-if>
+                                                        <span>[[tertiaryBadge.count]]</span>
+                                                      </div>
+                                                    </template>
+                                                  </dom-repeat>
+                                                </div>
+                                              </template>
+                                            </dom-if>
+                                          </a>
+                                      </template>
+                                    </dom-repeat>
+                                    </li>
+                                  </ul>
+                              </template>
+                            </dom-if>
+                            </div>
+                        </template>
+                      </dom-repeat>
+                      </li>
+                    </ul>
+                </template>
+              </dom-if>
+              </div>
+          </template>
+        </dom-repeat>
+        </li>
+      </ul>
+      <div slot="nodistribute"></div>
+  </template>
+
+  <script>
+    /**
+     * `ud-pf-vertical-nav`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfVerticalNavElement extends Polymer.Element {
+      static get is() { return 'ud-pf-vertical-nav'; }
+      static get properties() {
+        return {
+          /**
+          * The navigation items model
+          */
+          items: {
+            type: Object,
+            observer: '_itemsChanged'
+          },
+
+          hideIcons: {
+            type: Boolean,
+            value: () => false
+          },
+
+          persistentSecondary: {
+            type: Boolean,
+            value: () => false
+          },
+
+          showDelay: {
+            type: Number,
+            value: () => 500
+          },
+
+          hideDelay: {
+            type: Number,
+            value: () => 700
+          },
+
+          collapsed: {
+            type: Boolean,
+            value: () => false
+          },
+
+          showBadges: {
+            type: Boolean,
+            value: () => false
+          },
+
+          _model: {
+            type: Array,
+            value: () => []
+          },
+
+          _navStyles: {
+            type: String,
+            computed: '_getNavStyles(_model,hideIcons,persistentSecondary,_isSecondaryActive,_isTertiaryActive, collapsed, _smallScreen, showBadges)'
+          },
+
+          _isSecondaryActive: {
+            type: String,
+            value: () => false
+          },
+
+          _isTertiaryActive: {
+            type: String,
+            value: () => false
+          },
+
+          _smallScreen: {
+            type: Boolean,
+            observer: '_screenSizeChanged'
+          }
+        };
+      }
+
+      constructor() {
+        super();
+        this._itemsObserver = new Polymer.FlattenedNodesObserver(this, info => {
+          if (info.addedNodes.filter(this._isItem).length > 0 ||
+            info.removedNodes.filter(this._isItem).length > 0) {
+            let model = this._createItemsModel(this);
+            this.set('_model', model);
+          }
+        });
+      }
+
+      _isItem(node) {
+        return node.nodeType === Node.ELEMENT_NODE && /ud-pf-item/i.test(node.localName);
+      }
+
+      _isBadge(node) {
+        return node.nodeType === Node.ELEMENT_NODE && /ud-pf-badge/i.test(node.localName);
+      }
+
+      _createItemsModel(root) {
+        let items = this._getChildren(root, this._isItem);
+        let model = items.map(item => {
+          return {
+            title: item.title,
+            icon: item.icon,
+            href: item.href || "",
+            badges: this._getBadges(item),
+            children: this._createItemsModel(item),
+            isHover: false,
+            active: item.active
+          }
+        });
+
+        return model;
+      }
+
+      _getBadges(el) {
+        return this._getChildren(el, this._isBadge).map(bage => {
+          return {
+            count: bage.count,
+            iconClass: bage.iconClass,
+            tooltip: bage.tooltip
+          }
+        });
+      }
+
+      _getChildren(el, filter) {
+        return Polymer.FlattenedNodesObserver.getFlattenedNodes(el).filter(filter);
+      }
+
+      _itemsChanged(items) {
+        if (items) {
+          this.set('_model', items);
+        }
+      }
+
+      _hasChildren(item) {
+        return item.children && item.children.length > 0;
+      }
+
+      _getItemClasses(item, level) {
+        return 'list-group-item' + (this._hasChildren(item) ? (level === 1 ? ' secondary-nav-item-pf' : ' tertiary-nav-item-pf') : '');
+      }
+
+      _getNavStyles(model, hideIcons, persistentSecondary, isSecondaryActive, isTertiaryActive, collapsed, isMobile, showBadges) {
+        if (model.length === 0) return;
+
+        let result = 'nav-pf-vertical';
+        if (persistentSecondary) {
+          result += ' nav-pf-persistent-secondary';
+        }
+
+        if (model.find(m => m.children && m.children.length > 0)) {
+          result += ' nav-pf-vertical-with-sub-menus';
+        }
+
+        if (hideIcons) {
+          result += ' hidden-icons-pf';
+        }
+
+        if (isSecondaryActive) {
+          result += !isMobile ? ' hover-secondary-nav-pf' : ' show-mobile-secondary';
+        }
+
+        if (isTertiaryActive) {
+          result += ' hover-tertiary-nav-pf';
+        }
+
+        if (isMobile) {
+          result += ' hidden';
+        }
+
+        if (collapsed && !isMobile) {
+          result += ' collapsed';
+        } else if (!collapsed && isMobile) {
+          result += ' show-mobile-nav';
+        }
+
+        //Check if there's any badge
+        if (this.showBadges && model.find(m => this._hasBadge(m))) {
+          result += ' nav-pf-vertical-with-badges'
+        }
+
+        return result;
+      }
+
+      _hasBadge(item, recursive) {
+        recursive = recursive || true;
+        return (item.badges && item.badges.length > 0) ||
+          (recursive && item.children && item.children.length > 0 && item.children.find(m => this._hasBadge(m)));
+      }
+
+      _showSecondary(e) {
+        if (this._smallScreen) return;
+
+        let item = e.model.primary;
+
+        if (item.navUnHoverTimeout !== undefined) {
+          clearTimeout(item.navUnHoverTimeout);
+          item.navUnHoverTimeout = undefined;
+        } else if (item.navHoverTimeout === undefined && this._hasChildren(item)) {
+          item.navHoverTimeout = setTimeout(() => {
+            this._isSecondaryActive = true;
+            e.path[0].classList.add('is-hover');
+            item.navHoverTimeout = undefined;
+          }, this.showDelay);
+        }
+      }
+
+      _hideSecondary(e) {
+        if (this._smallScreen) return;
+
+        let item = e.model.primary;
+
+        if (item.navHoverTimeout !== undefined) {
+          clearTimeout(item.navHoverTimeout);
+          item.navHoverTimeout = undefined;
+        } else if (item.navUnHoverTimeout === undefined && this.$.nav.querySelectorAll('.secondary-nav-item-pf.is-hover').length > 0) {
+          item.navUnHoverTimeout = setTimeout(() => {
+            if (this.$.nav.querySelectorAll('.secondary-nav-item-pf.is-hover').length <= 1) {
+              this._isSecondaryActive = false;
+            }
+            e.path[0].classList.remove('is-hover');
+            item.navUnHoverTimeout = undefined;
+          }, this.hideDelay);
+        }
+      }
+
+      _showTertiary(e) {
+        if (this._smallScreen) return;
+
+        let item = e.model.secondary;
+
+        if (item.navUnHoverTimeout !== undefined) {
+          clearTimeout(item.navUnHoverTimeout);
+          item.navUnHoverTimeout = undefined;
+        } else if (item.navHoverTimeout === undefined && this._hasChildren(item)) {
+          item.navHoverTimeout = setTimeout(() => {
+            this._isTertiaryActive = true;
+            e.path[0].classList.add('is-hover');
+            item.navHoverTimeout = undefined;
+          }, this.showDelay);
+        }
+      }
+
+      _hideTertiary(e) {
+        if (this._smallScreen) return;
+
+        let item = e.model.secondary;
+
+        if (item.navHoverTimeout !== undefined) {
+          clearTimeout(item.navHoverTimeout);
+          item.navHoverTimeout = undefined;
+        } else if (item.navUnHoverTimeout === undefined && this.$.nav.querySelectorAll('.tertiary-nav-item-pf.is-hover').length > 0) {
+          item.navUnHoverTimeout = setTimeout(() => {
+            if (this.$.nav.querySelectorAll('.tertiary-nav-item-pf.is-hover').length <= 1) {
+              this._isTertiaryActive = false;
+            }
+            e.path[0].classList.remove('is-hover');
+            item.navUnHoverTimeout = undefined;
+          }, this.hideDelay);
+        }
+      }
+
+      _handleClick(e) {
+        e.stopPropagation();
+
+        if (!e.target.classList.contains('list-group-item-value') &&
+          !e.target.classList.contains('list-group-item')) return;
+
+        if (this._smallScreen) {
+          let item = e.model.primary || e.model.secondary || e.model.tertiary;
+          if (!item.children || item.children.length === 0) {
+            this._changeActiveItem(e);
+          } else {
+            let el = e.path.find(p => p.classList && p.classList.contains('list-group-item'));
+            el.classList.add('mobile-nav-item-pf');
+          }
+        } else {
+          this._changeActiveItem(e);
+        }
+      }
+
+      _changeActiveItem(e) {
+        Array.from(this.$.nav.querySelectorAll('.list-group-item.active')).forEach(el => {
+          el.classList.remove('active');
+        });
+        e.path.some(p => {
+          if (p.classList) {
+            if (p.classList.contains('list-group-item')) {
+              p.classList.add('active');
+            } else if (p.classList.contains('nav-pf-vertical')) {
+              return true;
+            }
+          }
+        });
+      }
+
+      _screenSizeChanged(smallScreen) {
+        this._isSecondaryActive = false;
+        this._isTertiaryActive = false;
+        if (smallScreen && !this.collapsed) {
+          this.collapsed = true;
+        }
+      }
+
+      _handleCollapseToggle(e) {
+        e.stopPropagation();
+        let parentItem = e.target.parentElement.parentElement.parentElement;
+        parentItem.classList.remove('mobile-nav-item-pf');
+      }
+    }
+
+    window.customElements.define(UdPfVerticalNavElement.is, UdPfVerticalNavElement);
+  </script>
+</dom-module>

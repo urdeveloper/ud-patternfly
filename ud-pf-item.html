@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<dom-module id="ud-pf-item">
+  <script>
+    /**
+     * `ud-pf-item`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfItemElement extends Polymer.Element {
+      static get is() { return 'ud-pf-item'; }
+      static get properties() {
+        return {
+          title: {
+            type: String
+          },
+
+          icon: {
+            type: String
+          },
+          
+          active: {
+            type: Boolean,
+            value: () => false
+          }
+        };
+      }
+    }
+
+    window.customElements.define(UdPfItemElement.is, UdPfItemElement);
+  </script>
+</dom-module>

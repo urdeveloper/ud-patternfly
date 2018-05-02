@@ -1,0 +1,49 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<dom-module id="ud-pf-nav-layout">
+  <script>
+    /**
+     * `ud-pf-nav-layout`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfNavLayoutElement extends Polymer.Element {
+      static get is() { return 'ud-pf-nav-layout'; }
+      static get properties() {
+        return {
+          vertical: {
+            type: Boolean,
+            reflectToAttribute: true,
+            value: ()=> false,
+            observer: '_verticalChanged'
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+        this.addEventListener('nav-toggle', this._handleToggle.bind(this));
+      }
+
+      _verticalChanged(vertical) {
+        let navbar = this.querySelector('ud-pf-navbar');
+        if (navbar) {
+          navbar.vertical = vertical;
+        }
+      }
+
+      _handleToggle(e) {
+        let verticalNav = this.querySelector('ud-pf-vertical-nav');
+        if (verticalNav) {
+          verticalNav.collapsed = !verticalNav.collapsed;
+        }
+      }
+    }
+
+    window.customElements.define(UdPfNavLayoutElement.is, UdPfNavLayoutElement);
+  </script>
+</dom-module>

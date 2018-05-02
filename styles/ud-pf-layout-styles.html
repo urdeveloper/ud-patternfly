@@ -1,0 +1,138 @@
+<dom-module id="ud-pf-layout-styles">
+<template>
+<style>
+.text-overflow-pf {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.layout-pf,
+.layout-pf body {
+  min-height: 100%;
+}
+.layout-pf.layout-pf-fixed.transitions .container-pf-nav-pf-vertical {
+  transition: all 200ms cubic-bezier(0.35, 0, 0.25, 1);
+}
+.layout-pf.layout-pf-fixed body {
+  padding-top: 60px;
+}
+.layout-pf.layout-pf-fixed .navbar-pf {
+  left: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1030;
+}
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical {
+  margin-left: 200px;
+}
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-vertical-with-badges {
+  margin-left: 250px;
+}
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.collapsed-nav {
+  margin-left: 75px;
+}
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.collapsed-nav.hidden-icons-pf {
+  margin-left: 0;
+}
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.hidden-nav {
+  margin-left: 0;
+}
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.hide-nav-pf {
+  margin-left: 0 !important;
+}
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.collapsed-secondary-nav-pf,
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.collapsed-tertiary-nav-pf {
+  margin-left: 200px;
+}
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.collapsed-secondary-nav-pf.nav-pf-vertical-with-badges,
+.layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.collapsed-tertiary-nav-pf.nav-pf-vertical-with-badges {
+  margin-left: 250px;
+}
+@media (min-width: 1200px) {
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf {
+    margin-left: 400px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.nav-pf-vertical-with-badges {
+    margin-left: 500px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.hidden-nav {
+    margin-left: 0;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-secondary-nav-pf {
+    margin-left: 200px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-secondary-nav-pf.nav-pf-vertical-with-badges {
+    margin-left: 250px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-tertiary-nav-pf {
+    margin-left: 200px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-tertiary-nav-pf.nav-pf-vertical-with-badges {
+    margin-left: 250px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-nav {
+    margin-left: 275px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-nav.nav-pf-vertical-with-badges {
+    margin-left: 325px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-nav.collapsed-secondary-nav-pf {
+    margin-left: 200px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-nav.collapsed-secondary-nav-pf.nav-pf-vertical-with-badges {
+    margin-left: 250px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-nav.collapsed-tertiary-nav-pf {
+    margin-left: 200px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-nav.collapsed-tertiary-nav-pf.nav-pf-vertical-with-badges {
+    margin-left: 250px;
+  }
+  .layout-pf.layout-pf-fixed .container-pf-nav-pf-vertical.nav-pf-persistent-secondary.secondary-visible-pf.collapsed-nav.hidden-icons-pf {
+    margin-left: 0;
+  }
+}
+.layout-pf.layout-pf-fixed-with-footer body {
+  padding-bottom: 37px;
+}
+.layout-pf-alt,
+.layout-pf-alt body {
+  min-height: 100%;
+}
+.layout-pf-alt.layout-pf-alt-fixed.layout-pf-alt-fixed-inner-scroll,
+.layout-pf-alt.layout-pf-alt-fixed.layout-pf-alt-fixed-inner-scroll body {
+  height: 100%;
+  min-height: 0;
+}
+.layout-pf-alt.layout-pf-alt-fixed.layout-pf-alt-fixed-inner-scroll .container-pf-alt-nav-pf-vertical-alt {
+  height: 100%;
+  overflow: auto;
+}
+.layout-pf-alt.layout-pf-alt-fixed.layout-pf-alt-fixed-inner-scroll .container-pf-alt-nav-pf-vertical-alt.container-cards-pf {
+  margin-top: 0;
+  padding-top: 20px;
+}
+.layout-pf-alt.layout-pf-alt-fixed.transitions .container-pf-alt-nav-pf-vertical-alt {
+  transition: all 200ms cubic-bezier(0.35, 0, 0.25, 1);
+}
+.layout-pf-alt.layout-pf-alt-fixed body {
+  padding-top: 60px;
+}
+.layout-pf-alt.layout-pf-alt-fixed .container-pf-alt-nav-pf-vertical-alt {
+  margin-left: 250px;
+}
+.layout-pf-alt.layout-pf-alt-fixed .container-pf-alt-nav-pf-vertical-alt.collapsed-nav {
+  margin-left: 75px;
+}
+.layout-pf-alt.layout-pf-alt-fixed .container-pf-alt-nav-pf-vertical-alt.hidden-nav {
+  margin-left: 0;
+}
+.layout-pf-alt.layout-pf-alt-fixed-with-footer body {
+  padding-bottom: 37px;
+}
+
+</style>
+</template>
+</dommodule>

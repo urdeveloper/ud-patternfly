@@ -1,0 +1,79 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<link rel="import" href="styles/ud-pf-shared-styles.html">
+<link rel="import" href="styles/ud-pf-navbar-styles.html">
+<link rel="import" href="styles/ud-pf-layout-styles.html">
+<link rel="import" href="styles/ud-pf-base-styles.html">
+
+<dom-module id="ud-pf-navbar">
+  <template>
+    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-layout-styles ud-pf-navbar-styles"></style>
+    <div class="layout-pf layout-pf-fixed">
+      <nav class$="[[_navClasses]]">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" on-click="_toggleClicked">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <a href="/" class="navbar-brand">
+            <img class="navbar-brand-icon" src="[[logoImage]]" alt="" />
+            <img class="navbar-brand-name" src="[[brandImage]]" alt="[[brandText]]" />
+          </a>
+
+        </div>
+      </nav>
+    </div>
+  </template>
+  <script>
+    /**
+     * `ud-pf-navbar`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfNavbarElement extends Polymer.Element {
+      static get is() { return 'ud-pf-navbar'; }
+      static get properties() {
+        return {
+          vertical: {
+            type: Boolean,
+            value: () => false
+          },
+
+          logoImage: {
+            type: String
+          },
+
+          brandImage: {
+            type: String
+          },
+
+          brandText: {
+            type: String
+          },
+
+          _navClasses: {
+            type: String,
+            computed: '_getNavClasses(vertical)'
+          }
+        };
+      }
+
+      _getNavClasses(vertical) {
+        return 'navbar' + (vertical ? ' navbar-pf-vertical' : '');
+      }
+
+      _toggleClicked(e) {
+        this.dispatchEvent(new CustomEvent('nav-toggle', { bubbles: true }));
+      }
+    }
+
+    window.customElements.define(UdPfNavbarElement.is, UdPfNavbarElement);
+  </script>
+</dom-module>
