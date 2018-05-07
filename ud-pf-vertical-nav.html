@@ -331,7 +331,7 @@
         } else if (item.navHoverTimeout === undefined && this._hasChildren(item)) {
           item.navHoverTimeout = setTimeout(() => {
             this._isSecondaryActive = true;
-            e.path[0].classList.add('is-hover');
+            e.composedPath()[0].classList.add('is-hover');
             item.navHoverTimeout = undefined;
           }, this.showDelay);
         }
@@ -350,7 +350,7 @@
             if (this.$.nav.querySelectorAll('.secondary-nav-item-pf.is-hover').length <= 1) {
               this._isSecondaryActive = false;
             }
-            e.path[0].classList.remove('is-hover');
+            e.composedPath()[0].classList.remove('is-hover');
             item.navUnHoverTimeout = undefined;
           }, this.hideDelay);
         }
@@ -367,7 +367,7 @@
         } else if (item.navHoverTimeout === undefined && this._hasChildren(item)) {
           item.navHoverTimeout = setTimeout(() => {
             this._isTertiaryActive = true;
-            e.path[0].classList.add('is-hover');
+            e.composedPath()[0].classList.add('is-hover');
             item.navHoverTimeout = undefined;
           }, this.showDelay);
         }
@@ -386,7 +386,7 @@
             if (this.$.nav.querySelectorAll('.tertiary-nav-item-pf.is-hover').length <= 1) {
               this._isTertiaryActive = false;
             }
-            e.path[0].classList.remove('is-hover');
+            e.composedPath()[0].classList.remove('is-hover');
             item.navUnHoverTimeout = undefined;
           }, this.hideDelay);
         }
@@ -403,7 +403,7 @@
           if (!item.children || item.children.length === 0) {
             this._changeActiveItem(e);
           } else {
-            let el = e.path.find(p => p.classList && p.classList.contains('list-group-item'));
+            let el = e.composedPath().find(p => p.classList && p.classList.contains('list-group-item'));
             el.classList.add('mobile-nav-item-pf');
           }
         } else {
@@ -415,7 +415,7 @@
         Array.from(this.$.nav.querySelectorAll('.list-group-item.active')).forEach(el => {
           el.classList.remove('active');
         });
-        e.path.some(p => {
+        e.composedPath().some(p => {
           if (p.classList) {
             if (p.classList.contains('list-group-item')) {
               p.classList.add('active');
