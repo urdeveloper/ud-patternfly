@@ -9,7 +9,7 @@
       }
 
       .hidden {
-        display: none!important;
+        display: none !important;
       }
     </style>
     <div class="layout-pf layout-pf-fixed">
@@ -42,10 +42,11 @@
           _navbar: Object,
           _veerticalNav: Object,
           _withBadges: Boolean,
+          _navCollapsed: Boolean,
 
           _contentStyle: {
             type: String,
-            computed: '_computeContentStyle(vertical, _navbar, _withBadges)'
+            computed: '_computeContentStyle(vertical, _navbar, _withBadges, _navCollapsed)'
           }
         };
       }
@@ -87,7 +88,8 @@
         }
 
         if (this._verticalNav) {
-          this._verticalNav.addEventListener('with-badges-changed', this._withBadgesChanged.bind(this));
+          this._verticalNav.removeEventListener('with-badges-changed', this._withBadgesChanged.bind(this));
+          this._verticalNav.removeEventListener('collapsed-changed', this._navCollapsedChanged.bind(this));
         }
 
         this._verticalNav = this.querySelector('ud-pf-vertical-nav');
@@ -95,10 +97,11 @@
           this._verticalNav._layout = this;
           this._verticalNav.setAttribute('slot', 'nav');
           this._verticalNav.addEventListener('with-badges-changed', this._withBadgesChanged.bind(this));
+          this._verticalNav.addEventListener('collapsed-changed', this._navCollapsedChanged.bind(this));
         }
       }
 
-      _computeContentStyle(vertical, navbar, withBadges) {
+      _computeContentStyle(vertical, navbar, withBadges, navCollapsed) {
         let style = 'container-fluid';
 
         if (vertical) {
@@ -109,11 +112,19 @@
           style += ' nav-pf-vertical-with-badges';
         }
 
+        if (navCollapsed) {
+          style += ' collapsed-nav';
+        }
+
         return style;
       }
 
       _withBadgesChanged(e) {
         this._withBadges = e.detail.value;
+      }
+
+      _navCollapsedChanged(e) {
+        this._navCollapsed = e.detail.value;
       }
     }
 
