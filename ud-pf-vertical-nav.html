@@ -13,7 +13,7 @@
   <template>
     <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-list-group-styles ud-pf-vertical-nav-styles">
       .hidden {
-        display: none!important;
+        display: none !important;
       }
     </style>
     <iron-media-query query="(max-width: 768px)" query-matches="{{_smallScreen}}"></iron-media-query>
@@ -204,8 +204,19 @@
           _smallScreen: {
             type: Boolean,
             observer: '_screenSizeChanged'
+          },
+
+          withBadges: {
+            type: Boolean,
+            readonly: true,
+            value: () => false,
+            notify: true
           }
         };
+      }
+
+      static get observers() {
+        return ['_modelChanged(_model.*)'];
       }
 
       constructor() {
@@ -331,7 +342,7 @@
         } else if (item.navHoverTimeout === undefined && this._hasChildren(item)) {
           item.navHoverTimeout = setTimeout(() => {
             this._isSecondaryActive = true;
-            e.composedPath()[0].classList.add('is-hover');
+            (e.path || e.composedPath())[0].classList.add('is-hover');
             item.navHoverTimeout = undefined;
           }, this.showDelay);
         }
@@ -350,7 +361,7 @@
             if (this.$.nav.querySelectorAll('.secondary-nav-item-pf.is-hover').length <= 1) {
               this._isSecondaryActive = false;
             }
-            e.composedPath()[0].classList.remove('is-hover');
+            (e.path || e.composedPath())[0].classList.remove('is-hover');
             item.navUnHoverTimeout = undefined;
           }, this.hideDelay);
         }
@@ -367,7 +378,7 @@
         } else if (item.navHoverTimeout === undefined && this._hasChildren(item)) {
           item.navHoverTimeout = setTimeout(() => {
             this._isTertiaryActive = true;
-            e.composedPath()[0].classList.add('is-hover');
+            (e.path || e.composedPath())[0].classList.add('is-hover');
             item.navHoverTimeout = undefined;
           }, this.showDelay);
         }
@@ -386,7 +397,7 @@
             if (this.$.nav.querySelectorAll('.tertiary-nav-item-pf.is-hover').length <= 1) {
               this._isTertiaryActive = false;
             }
-            e.composedPath()[0].classList.remove('is-hover');
+            (e.path || e.composedPath())[0].classList.remove('is-hover');
             item.navUnHoverTimeout = undefined;
           }, this.hideDelay);
         }
@@ -403,7 +414,7 @@
           if (!item.children || item.children.length === 0) {
             this._changeActiveItem(e);
           } else {
-            let el = e.composedPath().find(p => p.classList && p.classList.contains('list-group-item'));
+            let el = (e.target || e.composedPath()).find(p => p.classList && p.classList.contains('list-group-item'));
             el.classList.add('mobile-nav-item-pf');
           }
         } else {
@@ -415,7 +426,7 @@
         Array.from(this.$.nav.querySelectorAll('.list-group-item.active')).forEach(el => {
           el.classList.remove('active');
         });
-        e.composedPath().some(p => {
+        (e.target || e.composedPath()).some(p => {
           if (p.classList) {
             if (p.classList.contains('list-group-item')) {
               p.classList.add('active');
@@ -438,6 +449,15 @@
         e.stopPropagation();
         let parentItem = e.target.parentElement.parentElement.parentElement;
         parentItem.classList.remove('mobile-nav-item-pf');
+      }
+
+      _modelChanged() {
+        if (!this._model) return;
+        this.withBadges = this._anyBadge();
+      }
+
+      _anyBadge() {
+        return this._model.find(m => this._hasBadge(m)) != undefined;
       }
     }
 

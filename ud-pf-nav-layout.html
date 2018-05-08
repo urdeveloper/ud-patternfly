@@ -2,6 +2,23 @@
 <link rel="import" href="../iron-icon/iron-icon.html">
 
 <dom-module id="ud-pf-nav-layout">
+  <template>
+    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-layout-styles ud-pf-list-group-styles">
+      .layout-pf {
+        margin-top: 60px;
+      }
+
+      .hidden {
+        display: none!important;
+      }
+    </style>
+    <div class="layout-pf layout-pf-fixed">
+      <slot name="nav"></slot>
+      <div class$="[[_contentStyle]]">
+        <slot></slot>
+      </div>
+    </div>
+  </template>
   <script>
     /**
      * `ud-pf-nav-layout`
@@ -18,10 +35,29 @@
           vertical: {
             type: Boolean,
             reflectToAttribute: true,
-            value: ()=> false,
+            value: () => false,
             observer: '_verticalChanged'
+          },
+
+          _navbar: Object,
+          _veerticalNav: Object,
+          _withBadges: Boolean,
+
+          _contentStyle: {
+            type: String,
+            computed: '_computeContentStyle(vertical, _navbar, _withBadges)'
           }
         };
+      }
+
+      constructor() {
+        super();
+        this._itemsObserver = new Polymer.FlattenedNodesObserver(this, info => {
+          if (info.addedNodes.filter(node => node.nodeType === Node.ELEMENT_NODE).length > 0 ||
+            info.removedNodes.filter(node => node.nodeType === Node.ELEMENT_NODE).length > 0) {
+            this._setupChildren();
+          }
+        });
       }
 
       ready() {
@@ -30,17 +66,54 @@
       }
 
       _verticalChanged(vertical) {
-        let navbar = this.querySelector('ud-pf-navbar');
-        if (navbar) {
-          navbar.vertical = vertical;
+        if (this._navbar) {
+          this._navbar.vertical = vertical;
         }
       }
 
       _handleToggle(e) {
-        let verticalNav = this.querySelector('ud-pf-vertical-nav');
-        if (verticalNav) {
-          verticalNav.collapsed = !verticalNav.collapsed;
+        if (this._verticalNav) {
+          this._verticalNav.collapsed = !verticalNav.collapsed;
         }
+      }
+
+      _setupChildren() {
+        this._navbar = this.querySelector('ud-pf-navbar');
+
+        if (this._navbar) {
+          this._navbar._layout = this;
+          this._navbar.vertical = this.vertical;
+          this._navbar.setAttribute('slot', 'nav');
+        }
+
+        if (this._verticalNav) {
+          this._verticalNav.addEventListener('with-badges-changed', this._withBadgesChanged.bind(this));
+        }
+
+        this._verticalNav = this.querySelector('ud-pf-vertical-nav');
+        if (this._verticalNav) {
+          this._verticalNav._layout = this;
+          this._verticalNav.setAttribute('slot', 'nav');
+          this._verticalNav.addEventListener('with-badges-changed', this._withBadgesChanged.bind(this));
+        }
+      }
+
+      _computeContentStyle(vertical, navbar, withBadges) {
+        let style = 'container-fluid';
+
+        if (vertical) {
+          style += ' container-pf-nav-pf-vertical';
+        }
+
+        if (this._verticalNav && this._verticalNav.withBadges) {
+          style += ' nav-pf-vertical-with-badges';
+        }
+
+        return style;
+      }
+
+      _withBadgesChanged(e) {
+        this._withBadges = e.detail.value;
       }
     }
 

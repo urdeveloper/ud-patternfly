@@ -8,8 +8,15 @@
 <link rel="import" href="../ud-pf-badge.html">
 <link rel="import" href="../ud-pf-icons.html">
 
+<link rel="import" href="../styles/ud-pf-layout-styles.html">
+
 <dom-module id="demo-app">
   <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
     <ud-pf-nav-layout vertical>
       <ud-pf-navbar brand-text="Enterprise Application" logo-image="../img/logo-alt.svg" brand-image="../img/brand-alt.svg"></ud-pf-navbar>
       <ud-pf-vertical-nav show-badges>
@@ -36,7 +43,7 @@
         <ud-pf-item title="Adipscing" icon="icons:build"></ud-pf-item>
         <ud-pf-item title="Lorem" icon="icons:language"></ud-pf-item>
       </ud-pf-vertical-nav>
-      <!--content-->
+      Content
     </ud-pf-nav-layout>
   </template>
 
