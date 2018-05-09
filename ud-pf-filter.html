@@ -1,0 +1,56 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="styles/ud-pf-base-styles.html">
+<link rel="import" href="styles/ud-pf-shared-styles.html">
+<link rel="import" href="styles/ud-pf-filter-styles.html">
+<link rel="import" href="styles/ud-pf-forms-styles.html">
+
+<dom-module id="ud-pf-filter">
+  <template>
+    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-filter-styles ud-pf-forms-styles">
+      :host {
+        display: block;
+      }
+      .form-group {
+        width: 275px;
+      }
+    </style>
+    <div class="filter-pf">
+      <div class="input-group form-group">
+        <div class="input-group-btn dropdown">
+          <button type="button" class="btn btn-default dropdown-toggle">Name<span class="caret"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+    /**
+     * `ud-pf-filter`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfFilterElement extends Polymer.Element {
+      static get is() { return 'ud-pf-filter'; }
+      static get properties() {
+        return {
+          fields: {
+            type: Array
+          },
+          totalCount: {
+            type: Number
+          }
+        };
+      }
+
+      constructor() {
+        super();
+      }
+    }
+
+    window.customElements.define(UdPfFilterElement.is, UdPfFilterElement);
+  </script>
+</dom-module>

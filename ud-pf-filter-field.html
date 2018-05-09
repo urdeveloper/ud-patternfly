@@ -1,0 +1,32 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="ud-pf-filter-field">
+  <script>
+    /**
+     * `ud-pf-filter-field`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfFilterFieldElement extends Polymer.Element {
+      static get is() { return 'ud-pf-filter-field'; }
+      static get properties() {
+        return {
+          count: {
+            type: String
+          },
+          iconClass: {
+            type: String
+          },
+          tooltip: {
+            type: String
+          }
+        };
+      }
+    }
+
+    window.customElements.define(UdPfBadgeElement.is, UdPfBadgeElement);
+  </script>
+</dom-module>
