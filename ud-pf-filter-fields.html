@@ -1,0 +1,67 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="styles/ud-pf-base-styles.html">
+<link rel="import" href="styles/ud-pf-shared-styles.html">
+<link rel="import" href="styles/ud-pf-filter-styles.html">
+<link rel="import" href="styles/ud-pf-toolbar-styles.html">
+<link rel="import" href="ud-pf-dropdown.html">
+
+<dom-module id="ud-pf-filter-fields">
+  <template>
+    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-forms-styles ud-pf-filter-styles ud-pf-toolbar-styles">
+      :host {
+        display: block;
+        background-color: transparent;
+      }
+
+      :host(.toolbar-pf-filter) .form-group{
+        margin-bottom: 0px;
+      }
+    </style>
+      <div class="input-group">
+        <ud-pf-dropdown items="[[fields]]" class="input-group-btn" selected-item="{{_selectedField}}"></ud-pf-dropdown>
+        <input id="input" type="text" class="form-control" placeholder="[[_placeholderText]]" autocomplete="off">
+      </div>
+  </template>
+  <script>
+    /**
+     * `ud-pf-filter-fields`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfFilterFieldsElement extends Polymer.Element {
+      static get is() { return 'ud-pf-filter-fields'; }
+      static get properties() {
+        return {
+          fields: {
+            type: Array
+          },
+
+          _placeholderText: {
+            type: String,
+            computed: '_computePlacehoderText(_selectedField)',
+            observer: '_selectedFieldChanged'
+          },
+
+          _selectedField: {
+            type: Object
+          }
+        };
+      }
+
+      _computePlacehoderText(selectedField) {
+        if (selectedField) {
+          return selectedField.filterText || ('Filter By ' + selectedField.name + ' ...');
+        }
+      }
+
+      _selectedFieldChanged(selectedField) {
+      }
+    }
+
+    window.customElements.define(UdPfFilterFieldsElement.is, UdPfFilterFieldsElement);
+  </script>
+</dom-module>

@@ -1,0 +1,157 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../polymer/lib/elements/array-selector.html">
+
+<link rel="import" href="styles/ud-pf-base-styles.html">
+<link rel="import" href="styles/ud-pf-shared-styles.html">
+<link rel="import" href="styles/ud-pf-dropdowns-styles.html">
+<link rel="import" href="styles/ud-pf-forms-styles.html">
+<link rel="import" href="styles/ud-pf-buttons-styles.html">
+
+<dom-module id="ud-pf-dropdown">
+  <template>
+    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-forms-styles ud-pf-dropdowns-styles ud-pf-buttons-styles">
+      :host {
+        display: table-cell;
+      }
+
+      .btn {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        margin-right: -1px;
+      }
+    </style>
+    <div class$="[[_groupStyles]]">
+      <button id="btn" type="button" class="btn btn-default dropdown-toggle" on-click="_handleClick" on-blur="_handleBlur" on-keydown="_handleKeydown"
+        aria-haspopup="true" aria-expanded$="[[_open]]">[[selectedItem.name]]
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" id="dropdown">
+        <dom-repeat items="[[items]]" id="itemList">
+          <template>
+            <li>
+              <a href="#" disabled$="[[item.disabled]]" on-click="_handleItemClick" on-keydown="_handleItemKeydown">[[item.name]]</a>
+            </li>
+          </template>
+        </dom-repeat>
+      </ul>
+    </div>
+    <array-selector id="selector" items="[[items]]" selected="{{selectedItem}}"></array-selector>
+  </template>
+  <script>
+    /**
+     * `ud-pf-dropdown`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfDropdownElement extends Polymer.Element {
+      static get is() { return 'ud-pf-dropdown'; }
+      static get properties() {
+        return {
+          _open: {
+            type: Boolean,
+            value: () => false
+          },
+          _groupStyles: {
+            type: String,
+            computed: '_computeGroupStyles(_open)'
+          },
+
+          disabled: {
+            type: Boolean,
+            value: () => false
+          },
+
+          items: {
+            type: Array,
+            value: () => []
+          },
+
+          selectedItem: {
+            type: Object,
+            notify: true
+          }
+        };
+      }
+
+      constructor() {
+        super();
+        this.ESCAPE_KEYCODE = 27; // Escape (Esc) key
+        this.SPACE_KEYCODE = 32; // space key
+        this.TAB_KEYCODE = 9; // tab key
+        this.ARROW_UP_KEYCODE = 38; // up arrow key
+        this.ARROW_DOWN_KEYCODE = 40; // down arrow key
+        this.RIGHT_MOUSE_BUTTON_WHICH = 3; // right button (assuming a right-handed mouse)
+        this.REGEXP_KEYDOWN = new RegExp(`${this.ARROW_UP_KEYCODE}|${this.ARROW_DOWN_KEYCODE}|${this.ESCAPE_KEYCODE}`);
+      }
+
+      _computeGroupStyles(open) {
+        return 'input-group-btn' + (open ? ' open' : '');
+      }
+
+      _handleClick(e) {
+        if (this.disabled) return;
+
+        this._open = !this._open;
+      }
+
+      _handleBlur(e) {
+        if (this.disabled) return;
+        if (!e.relatedTarget || !this.$.itemList.itemForElement(e.relatedTarget)) {
+          this._open = false;
+        }
+      }
+
+      _handleKeydown(event) {
+        if (event.which === this.ARROW_UP_KEYCODE || event.which === this.ARROW_DOWN_KEYCODE) {
+          this._open = true;
+          this.$.dropdown.querySelector('li>a').focus();
+        }
+      }
+
+      _handleItemKeydown(event) {
+        if (event.which === this.ARROW_DOWN_KEYCODE) {
+          let model = this.$.itemList.modelForElement(event.target);
+          if (model.index < this.items.length) {
+            var itemElements = this.$.dropdown.querySelectorAll('li>a');
+            for (var i = model.index + 1; i < itemElements.length; i++) {
+              let item = itemElements[i];
+              if (!item.hasAttribute('disabled')) {
+                item.focus();
+                return;
+              }
+            }
+          }
+        } else if (event.which === this.ARROW_UP_KEYCODE) {
+          let model = this.$.itemList.modelForElement(event.target);
+          if (model.index > 0) {
+            var itemElements = this.$.dropdown.querySelectorAll('li>a');
+            for (var i = model.index - 1; i >= 0; i--) {
+              let item = itemElements[i];
+              if (!item.hasAttribute('disabled')) {
+                item.focus();
+                return;
+              }
+            }
+          }
+        } else if (event.which === this.ESCAPE_KEYCODE) {
+          this._open = false;
+          this.$.btn.focus();
+        }
+      }
+
+      _handleItemClick(e) {
+        let item = this.$.itemList.itemForElement(e.target);
+        if (item.disabled) return;
+        this.$.selector.select(item);
+        this._open = false;
+        this.$.btn.focus();
+      }
+    }
+
+    window.customElements.define(UdPfDropdownElement.is, UdPfDropdownElement);
+  </script>
+</dom-module>

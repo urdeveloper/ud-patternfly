@@ -1,0 +1,92 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/utils/flattened-nodes-observer.html">
+
+<link rel="import" href="styles/ud-pf-base-styles.html">
+<link rel="import" href="styles/ud-pf-shared-styles.html">
+<link rel="import" href="styles/ud-pf-grid-styles.html">
+<link rel="import" href="styles/ud-pf-toolbar-styles.html">
+<link rel="import" href="styles/ud-pf-table-view-styles.html">
+<link rel="import" href="styles/ud-pf-buttons-styles.html">
+
+<dom-module id="ud-pf-toolbar">
+  <template>
+    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-grid-styles ud-pf-buttons-styles ud-pf-toolbar-styles ud-pf-table-view-styles">
+      :host {
+        display: block;
+      }
+
+      .toolbar-pf {
+        height: 88px;
+      }
+
+      .form-group ::slotted(ud-pf-button:not(:first-of-type)) {
+        margin-left: 5px;
+      }
+    </style>
+    <div class$="[[_toolbarStyles]]">
+      <div class="col-sm-12">
+        <form class="toolbar-pf-actions">
+          <div class="form-group toolbar-pf-filter">
+            <slot name="filter"></slot>
+          </div>
+          <div class="form-group">
+            <slot name="actions"></slot>
+          </div>
+        </form>
+        <div class="row toolbar-pf-results">
+          <slot name="results"></slot>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+    /**
+     * `ud-pf-toolbar`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfToolbarElement extends Polymer.Element {
+      static get is() { return 'ud-pf-toolbar'; }
+      static get properties() {
+        return {
+          tableView: {
+            type: Boolean,
+            value: () => false
+          },
+
+          _toolbarStyles: {
+            type: String,
+            computed: '_computeToolbarStyles(tableView)'
+          }
+        };
+      }
+
+      _computeToolbarStyles(tableView) {
+        return 'row toolbar-pf' + (tableView ? ' table-view-pf-toolbar' : '');
+      }
+
+      constructor() {
+        super();
+        this._itemsObserver = new Polymer.FlattenedNodesObserver(this, info => {
+          if (info.addedNodes.filter(node => node.nodeType === Node.ELEMENT_NODE).length > 0 ||
+            info.removedNodes.filter(node => node.nodeType === Node.ELEMENT_NODE).length > 0) {
+            this._setupChildren();
+          }
+        });
+      }
+
+      _setupChildren() {
+        this.querySelectorAll('[slot=actions]').forEach(element => {
+          if (/ud-pf-filter-fields/i.test(element.localName)) {
+            element.classList.add("toolbar-pf-filter");
+          }
+        });;
+      }
+    }
+
+    window.customElements.define(UdPfToolbarElement.is, UdPfToolbarElement);
+  </script>
+</dom-module>

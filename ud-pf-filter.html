@@ -2,27 +2,16 @@
 
 <link rel="import" href="styles/ud-pf-base-styles.html">
 <link rel="import" href="styles/ud-pf-shared-styles.html">
-<link rel="import" href="styles/ud-pf-filter-styles.html">
-<link rel="import" href="styles/ud-pf-forms-styles.html">
+<link rel="import" href="ud-pf-filter-fields.html">
 
 <dom-module id="ud-pf-filter">
   <template>
-    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-filter-styles ud-pf-forms-styles">
+    <style include="ud-pf-base-styles ud-pf-shared-styles">
       :host {
         display: block;
       }
-      .form-group {
-        width: 275px;
-      }
     </style>
-    <div class="filter-pf">
-      <div class="input-group form-group">
-        <div class="input-group-btn dropdown">
-          <button type="button" class="btn btn-default dropdown-toggle">Name<span class="caret"></span>
-          </button>
-        </div>
-      </div>
-    </div>
+    <ud-pf-filter-fields fields="[[fields]]"></ud-pf-filter-fields>
   </template>
   <script>
     /**
@@ -44,10 +33,6 @@
             type: Number
           }
         };
-      }
-
-      constructor() {
-        super();
       }
     }
 

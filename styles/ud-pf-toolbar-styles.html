@@ -1,0 +1,221 @@
+<dom-module id="ud-pf-toolbar-styles">
+<template>
+<style>
+.text-overflow-pf {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.toolbar-pf {
+  background: #fff;
+  border-bottom: 1px solid #d1d1d1;
+  box-shadow: 0 1px 0px rgba(3, 3, 3, 0.045);
+  padding-top: 10px;
+}
+.toolbar-pf .form-group {
+  margin-bottom: 10px;
+}
+@media (min-width: 768px) {
+  .toolbar-pf .form-group {
+    border-right: 1px solid #d1d1d1;
+    float: left;
+    margin-bottom: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+.toolbar-pf .form-group:last-child {
+  border-right: 0;
+  margin-bottom: 0;
+  padding-right: 0;
+}
+.toolbar-pf .form-group .btn + .btn,
+.toolbar-pf .form-group .btn-group + .btn,
+.toolbar-pf .form-group .btn + .btn-group,
+.toolbar-pf .form-group .btn-group + .btn-group {
+  margin-left: 5px;
+}
+.toolbar-pf .form-group .btn + .btn-link,
+.toolbar-pf .form-group .btn-group + .btn-link,
+.toolbar-pf .form-group .btn + .dropdown,
+.toolbar-pf .form-group .btn-group + .dropdown {
+  margin-left: 10px;
+}
+.toolbar-pf .form-group .btn-link {
+  color: #252525;
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px 0;
+}
+.toolbar-pf .form-group .btn-link:active,
+.toolbar-pf .form-group .btn-link:focus,
+.toolbar-pf .form-group .btn-link:hover {
+  color: #0088ce;
+}
+.toolbar-pf .form-group .dropdown-kebab-pf .btn-link {
+  padding: 4px 10px;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.toolbar-pf-actions {
+  display: table;
+  margin-bottom: 10px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .toolbar-pf-actions .toolbar-pf-filter {
+    padding-left: 0;
+  }
+}
+.toolbar-pf-view-selector {
+  font-size: 16px;
+}
+.toolbar-pf-view-selector .btn-link.active {
+  color: #0088ce;
+  cursor: default;
+}
+.toolbar-pf-action-right {
+  float: right;
+}
+@media (max-width: 768px) {
+  .toolbar-pf-action-right {
+    float: none;
+  }
+}
+.toolbar-pf-find {
+  font-size: 14px;
+  position: relative;
+}
+.find-pf-dropdown-container {
+  background: #fff;
+  border: solid 1px #bbb;
+  display: none;
+  right: -20px;
+  padding: 5px;
+  position: absolute;
+  top: 35px;
+  width: 300px;
+  z-index: 10000;
+}
+@media (max-width: 768px) {
+  .find-pf-dropdown-container {
+    left: 30px;
+    top: -5px;
+    width: calc(70%);
+  }
+}
+.find-pf-dropdown-container:before,
+.find-pf-dropdown-container:after {
+  content: "";
+  position: absolute;
+}
+.find-pf-dropdown-container:before {
+  border-bottom: 11px solid #bbb;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  right: 35px;
+  top: -12px;
+}
+.toolbar-pf-find:last-child .find-pf-dropdown-container:before {
+  right: 15px;
+}
+@media (max-width: 768px) {
+  .find-pf-dropdown-container:before {
+    border-bottom: 11px solid transparent;
+    border-right: 11px solid #bbb;
+    border-top: 11px solid transparent;
+    left: -22px;
+    right: initial;
+    top: 8px;
+  }
+}
+.find-pf-dropdown-container:after {
+  border-bottom: 10px solid #fff;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  right: 36px;
+  top: -10px;
+}
+.toolbar-pf-find:last-child .find-pf-dropdown-container:after {
+  right: 16px;
+}
+@media (max-width: 768px) {
+  .find-pf-dropdown-container:after {
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #fff;
+    border-top: 10px solid transparent;
+    left: -20px;
+    right: initial;
+    top: 9px;
+  }
+}
+.find-pf-dropdown-container input {
+  height: 30px;
+  padding: 5px 117px 5px 5px;
+  width: 100%;
+}
+.find-pf-dropdown-container .find-pf-buttons {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+.find-pf-dropdown-container .find-pf-buttons .btn {
+  border: none;
+  cursor: pointer;
+  margin-left: 0 !important;
+  padding: 0;
+  width: 18px;
+}
+.find-pf-dropdown-container .find-pf-buttons .btn .fa-angle-up,
+.find-pf-dropdown-container .find-pf-buttons .btn .fa-angle-down {
+  font-weight: bold;
+  font-size: 18px;
+}
+.find-pf-dropdown-container .find-pf-buttons .btn .pficon-close {
+  font-size: 14px;
+}
+.find-pf-dropdown-container .find-pf-buttons span {
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+}
+.find-pf-dropdown-container .find-pf-buttons .find-pf-nums {
+  color: #8b8d8f;
+  margin-right: 3px;
+}
+.toolbar-pf-results {
+  border-top: 1px solid #d1d1d1;
+  margin-top: 10px;
+}
+.toolbar-pf-results h5,
+.toolbar-pf-results p,
+.toolbar-pf-results ul {
+  display: inline-block;
+  line-height: 26.66666667px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+@media (min-width: 768px) {
+  .toolbar-pf-results h5,
+  .toolbar-pf-results p,
+  .toolbar-pf-results ul {
+    line-height: 40px;
+  }
+}
+.toolbar-pf-results h5 {
+  font-weight: 700;
+  margin-right: 20px;
+}
+.toolbar-pf-results .label {
+  font-size: 11px;
+}
+.toolbar-pf-results .label a {
+  color: #fff;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+</style>
+</template>
+</dommodule>

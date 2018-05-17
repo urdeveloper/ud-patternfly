@@ -1,0 +1,85 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="styles/ud-pf-base-styles.html">
+<link rel="import" href="styles/ud-pf-shared-styles.html">
+<link rel="import" href="styles/ud-pf-buttons-styles.html">
+
+<dom-module id="ud-pf-button">
+  <template>
+    <style include="ud-pf-base-styles ud-pf-shared-styles ud-pf-buttons-styles"></style>
+    <button class$="[[_buttonStyles]]">
+      <slot></slot>
+    </button>
+  </template>
+  <script>
+    /**
+     * `ud-pf-button`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class UdPfButtonElement extends Polymer.Element {
+      static get is() { return 'ud-pf-button'; }
+
+      static get properties() {
+        return {
+          buttonType: {
+            type: String,
+            value: () => 'default'
+          },
+          size: {
+            type: String,
+            value: () => 'default'
+          },
+          disabled: {
+            type: Boolean,
+            value: () => false
+          },
+          block: {
+            type: Boolean,
+            value: () => false
+          },
+          _buttonStyles: {
+            type: String,
+            computed: '_computeButtonStyles(buttonType)'
+          }
+        }
+      }
+
+      _computeButtonStyles(buttonType) {
+        let styles = `btn btn-${buttonType}`;
+
+        if (this.disabled) {
+          styles += ' disabled';
+        }
+
+        switch (this.size) {
+          case 'large':
+            styles += ' btn-lg';
+            break;
+
+          case 'small':
+            styles += ' btn-sm';
+            break;
+
+          case 'extra-small':
+            styles += ' btn-xs';
+            break;
+
+          default:
+            break;
+        }
+
+        if (this.block) {
+          styles += ' btn-block';
+        }
+
+        return styles;
+      }
+    }
+
+    window.customElements.define(UdPfButtonElement.is, UdPfButtonElement);
+  </script>
+</dom-module>

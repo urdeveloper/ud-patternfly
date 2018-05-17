@@ -1,0 +1,160 @@
+<dom-module id="ud-pf-table-view-styles">
+<template>
+<style>
+.text-overflow-pf {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+table.dataTable {
+  height: 100%;
+  margin-bottom: 0;
+  max-width: none !important;
+}
+table.dataTable tbody > tr > td.table-view-pf-actions {
+  padding: 0;
+  vertical-align: middle;
+}
+table.dataTable tbody > tr:hover > td.table-view-pf-actions {
+  background-color: #f5f5f5;
+  border-bottom-color: #d1d1d1;
+}
+table.dataTable tbody > tr.selected {
+  color: #fff;
+  background-color: #0088ce;
+}
+table.dataTable tbody > tr.selected > td {
+  border-bottom-color: #00659c;
+}
+table.dataTable tbody > tr.selected > td.table-view-pf-actions {
+  background-color: #f5f5f5;
+  border-bottom-color: #d1d1d1;
+}
+table.dataTable tbody > tr.selected:hover > td {
+  background-color: inherit;
+  border-bottom-color: #00659c;
+}
+table.dataTable tbody > tr.selected:hover > td.table-view-pf-actions {
+  background-color: #f5f5f5;
+  border-bottom-color: #d1d1d1;
+}
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+  cursor: pointer;
+}
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+  color: #0088ce !important;
+  position: relative;
+}
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after {
+  content: "\f107";
+  font-family: "FontAwesome";
+  font-size: 10px;
+  font-weight: normal;
+  height: 9px;
+  left: 7px;
+  line-height: 12px;
+  position: relative;
+  top: 2px;
+  vertical-align: baseline;
+  width: 12px;
+}
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_desc:before {
+  background: #0088ce;
+  content: "";
+  height: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+table.dataTable thead .sorting_asc:after {
+  content: "\f106";
+  top: -3px;
+}
+table.dataTable th:active {
+  outline: none;
+}
+.table-view-pf-empty.blank-slate-pf {
+  background-color: #f5f5f5;
+  border: 1px solid #d1d1d1;
+  border-radius: 0;
+  margin-top: -1px;
+}
+.table-view-pf-toolbar.toolbar-pf {
+  background-color: #f5f5f5;
+  border-bottom: none;
+  border-left: 1px solid #d1d1d1;
+  border-right: 1px solid #d1d1d1;
+  border-top: 1px solid #d1d1d1;
+  box-shadow: none;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.table-view-pf-toolbar.toolbar-pf .toolbar-pf-results {
+  border-top: 1px solid #d1d1d1;
+  min-height: 40px;
+  line-height: 40px;
+}
+.table-view-pf-toolbar-external.toolbar-pf {
+  border-bottom: none;
+  border-top: none;
+  box-shadow: none;
+}
+.table-view-pf-toolbar-external.toolbar-pf .toolbar-pf-results {
+  border-top: 1px solid #d1d1d1;
+  min-height: 40px;
+  line-height: 40px;
+}
+.table-view-pf-colvis-menu > li {
+  padding: 5px 10px;
+}
+.table-view-pf-colvis-menu > li:hover {
+  background-color: #def3ff;
+}
+.table-view-pf-colvis-menu > li > input {
+  margin-top: 0;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.table-view-pf-colvis-menu > li > label {
+  margin-bottom: 0;
+}
+.table-view-pf-actions {
+  background-color: #f1f1f1;
+  height: 100%;
+}
+.table-view-pf-actions .btn,
+.table-view-pf-actions .dropdown-toggle {
+  border: none;
+  box-shadow: none;
+  height: 100%;
+  width: 100%;
+}
+.table-view-pf-actions .dropdown,
+.table-view-pf-actions .table-view-pf-btn {
+  height: 100%;
+}
+.table-view-pf-actions .dropdown-menu.dropdown-menu-right {
+  right: -5px;
+}
+.table-view-pf-actions:last-child {
+  width: 24px;
+}
+.table-view-pf-select {
+  width: 33px;
+}
+.table-view-pf-select-results {
+  text-align: right;
+}
+
+</style>
+</template>
+</dommodule>
